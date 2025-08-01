@@ -32,7 +32,7 @@
       align-items: center;
       justify-content: center;
       padding: 30px 20px;
-      min-height: calc(100vh - 70px);
+      min-height: calc(100vh - 140px);
     }
 
     .cover-art {
@@ -55,9 +55,15 @@
       font-weight: bold;
     }
 
-    .song-artist {
+    .song-artist a {
       font-size: 1rem;
       color: #b3b3b3;
+      text-decoration: none;
+    }
+
+    .song-artist a:hover {
+      color: #1db954;
+      text-decoration: underline;
     }
 
     .controls {
@@ -158,11 +164,20 @@
     }
 
     footer {
-      margin-top: 30px;
+      margin-top: 40px;
       text-align: center;
       font-size: 0.8rem;
       color: #888;
-      user-select: none;
+      padding-bottom: 30px;
+    }
+
+    footer a {
+      color: #1db954;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -176,10 +191,10 @@
     <div class="song-info">
       <div class="song-title">Never Gonna Give You Up</div>
       <div class="song-artist">
-  <a href="https://rickastley.co.uk" target="_blank" rel="noopener noreferrer" style="color: #b3b3b3; text-decoration: none;">
-    Rick Astley
-  </a>
-</div>
+        <a href="https://rickastley.co.uk" target="_blank" rel="noopener noreferrer">
+          Rick Astley
+        </a>
+      </div>
     </div>
 
     <div class="controls">
@@ -203,7 +218,15 @@
     <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
   </div>
 
-  <footer>© 2025 EchoPlay – Hör dein eigenes Ding.</footer>
+  <footer>
+    <p>© 2025 EchoPlay – Hör dein eigenes Ding.</p>
+    <p style="font-size: 0.75rem; color: #bbb; margin-top: 5px;">
+      Diese Plattform ist <strong>100 % kostenlos</strong>, werbefrei und verwendet keine Cookies.  
+      <br>
+      <a href="impressum.html" target="_blank">Impressum</a> ·
+      <a href="datenschutz.html" target="_blank">Datenschutz</a>
+    </p>
+  </footer>
 
   <script>
     const audio = document.getElementById("audio");
@@ -263,7 +286,6 @@
       audio.volume = volumeControl.value;
     });
 
-    // Initial Lautstärke
     audio.volume = 0.5;
     volumeControl.value = 0.5;
 
@@ -287,5 +309,4 @@
   </script>
 
 </body>
-
 </html>
