@@ -2,21 +2,26 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>EchoPlay – Now Playing</title>
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
       background-color: #121212;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: "Helvetica Neue", sans-serif;
       color: white;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      padding: 20px;
     }
-
     header {
+      width: 100%;
+      max-width: 400px;
       background-color: #181818;
       padding: 15px 20px;
       font-size: 1.5rem;
@@ -24,56 +29,59 @@
       color: #1db954;
       box-shadow: 0 2px 10px rgba(0,0,0,0.4);
       user-select: none;
+      border-radius: 6px;
+      text-align: center;
+      margin-bottom: 20px;
     }
-
     .player-container {
+      background-color: #181818;
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 30px 20px;
-      min-height: calc(100vh - 140px);
+      user-select: none;
+      flex-grow: 1;
     }
-
     .cover-art {
       width: 280px;
       height: 280px;
+      background-image: url('rick-cover.jpg');
       background-size: cover;
       background-position: center;
       border-radius: 8px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+      margin-bottom: 20px;
+      flex-shrink: 0;
     }
-
     .song-info {
       text-align: center;
-      margin-top: 20px;
-      user-select: none;
+      margin-bottom: 20px;
     }
-
     .song-title {
       font-size: 1.4rem;
       font-weight: bold;
+      margin-bottom: 5px;
     }
-
     .song-artist a {
       font-size: 1rem;
       color: #b3b3b3;
       text-decoration: none;
     }
-
     .song-artist a:hover {
       color: #1db954;
       text-decoration: underline;
     }
-
     .controls {
-      margin-top: 25px;
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 25px;
+      margin-bottom: 20px;
     }
-
     .btn {
       background: none;
       border: none;
@@ -83,15 +91,12 @@
       transition: transform 0.2s, color 0.2s;
       user-select: none;
     }
-
     .btn:hover {
       transform: scale(1.15);
     }
-
     .btn.active {
       color: #1db954;
     }
-
     .play-pause-btn {
       width: 50px;
       height: 50px;
@@ -109,14 +114,13 @@
 
       transition: background-color 0.3s;
       user-select: none;
+      padding: 0;
+      line-height: 0;
     }
-
     .play-pause-btn:hover {
       background-color: #1ed760;
     }
-
     .progress-container {
-      margin-top: 20px;
       width: 100%;
       max-width: 280px;
       display: flex;
@@ -124,7 +128,6 @@
       gap: 10px;
       user-select: none;
     }
-
     .progress {
       flex: 1;
       height: 5px;
@@ -133,7 +136,6 @@
       position: relative;
       cursor: pointer;
     }
-
     .progress-filled {
       height: 100%;
       background: #1db954;
@@ -141,57 +143,53 @@
       border-radius: 2px;
       transition: width 0.1s linear;
     }
-
     .time {
       font-size: 0.75rem;
       color: #b3b3b3;
       min-width: 35px;
       text-align: center;
-      user-select: none;
     }
-
     .volume {
       margin-top: 15px;
       display: flex;
       align-items: center;
       gap: 10px;
       user-select: none;
+      color: #b3b3b3;
     }
-
     input[type="range"] {
       width: 100px;
       cursor: pointer;
+      background: transparent;
     }
-
     footer {
-      margin-top: 40px;
-      text-align: center;
+      margin-top: 30px;
       font-size: 0.8rem;
       color: #888;
-      padding-bottom: 30px;
+      max-width: 400px;
+      text-align: center;
+      line-height: 1.4;
+      user-select: none;
     }
-
     footer a {
       color: #1db954;
       text-decoration: none;
     }
-
     footer a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
   <header>EchoPlay</header>
 
-  <div class="player-container">
-    <div class="cover-art" style="background-image: url('rick-cover.jpg');"></div>
+  <main class="player-container" role="main" aria-label="Musikplayer">
+    <div class="cover-art" aria-label="Album Cover"></div>
 
     <div class="song-info">
       <div class="song-title">Never Gonna Give You Up</div>
       <div class="song-artist">
-        <a href="https://rickastley.co.uk" target="_blank" rel="noopener noreferrer">
+        <a href="https://rickastley.co.uk" target="_blank" rel="noopener noreferrer" title="Offizielle Webseite von Rick Astley">
           Rick Astley
         </a>
       </div>
@@ -199,32 +197,31 @@
 
     <div class="controls">
       <button class="btn" id="repeatBtn" title="Wiederholen">⟳</button>
-      <button class="play-pause-btn" id="playPauseBtn" title="Abspielen">▶</button>
+      <button class="play-pause-btn" id="playPauseBtn" title="Abspielen" aria-pressed="false" aria-label="Abspielen">▶</button>
     </div>
 
-    <div class="progress-container">
+    <div class="progress-container" aria-label="Wiedergabefortschritt" role="slider" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <div class="time" id="currentTime">0:00</div>
-      <div class="progress" onclick="seek(event)" title="Zum Zeitpunkt springen">
+      <div class="progress" id="progressBarContainer" tabindex="0" aria-label="Zum Zeitpunkt springen">
         <div class="progress-filled" id="progressBar"></div>
       </div>
       <div class="time" id="duration">0:00</div>
     </div>
 
     <div class="volume" title="Lautstärke">
-      <span style="font-size: 16px;">🔊</span>
-      <input type="range" min="0" max="1" step="0.01" id="volumeControl" />
+      <span aria-hidden="true">🔊</span>
+      <input type="range" min="0" max="1" step="0.01" id="volumeControl" aria-label="Lautstärkeregler" />
     </div>
 
-    <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
-  </div>
+    <audio id="audio" src="never-gonna-give-you-up.mp3" preload="metadata"></audio>
+  </main>
 
   <footer>
     <p>© 2025 EchoPlay – Hör dein eigenes Ding.</p>
-    <p style="font-size: 0.75rem; color: #bbb; margin-top: 5px;">
-      Diese Plattform ist <strong>100 % kostenlos</strong>, werbefrei und verwendet keine Cookies.  
-      <br>
-      <a href="impressum.html" target="_blank">Impressum</a> ·
-      <a href="datenschutz.html" target="_blank">Datenschutz</a>
+    <p>
+      Diese Plattform ist <strong>100 % kostenlos</strong>, werbefrei und verwendet keine Cookies.<br />
+      <a href="impressum.html" target="_blank" rel="noopener">Impressum</a> ·
+      <a href="datenschutz.html" target="_blank" rel="noopener">Datenschutz</a>
     </p>
   </footer>
 
@@ -232,6 +229,7 @@
     const audio = document.getElementById("audio");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const progressBar = document.getElementById("progressBar");
+    const progressBarContainer = document.getElementById("progressBarContainer");
     const currentTimeDisplay = document.getElementById("currentTime");
     const durationDisplay = document.getElementById("duration");
     const volumeControl = document.getElementById("volumeControl");
@@ -240,15 +238,23 @@
     let isPlaying = false;
     let isRepeating = false;
 
+    function formatTime(sec) {
+      const minutes = Math.floor(sec / 60);
+      const seconds = Math.floor(sec % 60);
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+
     playPauseBtn.addEventListener("click", () => {
       if (isPlaying) {
         audio.pause();
         playPauseBtn.textContent = "▶";
         playPauseBtn.title = "Abspielen";
+        playPauseBtn.setAttribute("aria-pressed", "false");
       } else {
         audio.play();
         playPauseBtn.textContent = "⏸";
         playPauseBtn.title = "Pause";
+        playPauseBtn.setAttribute("aria-pressed", "true");
       }
       isPlaying = !isPlaying;
     });
@@ -262,17 +268,12 @@
 
         currentTimeDisplay.textContent = formatTime(current);
         durationDisplay.textContent = formatTime(duration);
+        progressBarContainer.setAttribute("aria-valuenow", Math.floor(percent));
       }
     });
 
-    function formatTime(sec) {
-      const minutes = Math.floor(sec / 60);
-      const seconds = Math.floor(sec % 60);
-      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-    }
-
     function seek(e) {
-      const rect = e.currentTarget.getBoundingClientRect();
+      const rect = progressBarContainer.getBoundingClientRect();
       const offsetX = e.clientX - rect.left;
       const width = rect.width;
       const duration = audio.duration;
@@ -281,6 +282,8 @@
         audio.currentTime = newTime;
       }
     }
+
+    progressBarContainer.addEventListener("click", seek);
 
     volumeControl.addEventListener("input", () => {
       audio.volume = volumeControl.value;
@@ -302,11 +305,11 @@
         isPlaying = false;
         playPauseBtn.textContent = "▶";
         playPauseBtn.title = "Abspielen";
+        playPauseBtn.setAttribute("aria-pressed", "false");
         progressBar.style.width = "0%";
         currentTimeDisplay.textContent = "0:00";
       }
     });
   </script>
-
 </body>
 </html>
