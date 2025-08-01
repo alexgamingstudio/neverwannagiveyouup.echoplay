@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EchoPlay – Now Playing</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #121212;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: white;
+    }
+
+    header {
+      background-color: #181818;
+      padding: 15px 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #1db954;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      user-select: none;
+    }
+
+    .player-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      min-height: calc(100vh - 70px);
+    }
+
+    .cover-art {
+      width: 280px;
+      height: 280px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .song-info {
+      text-align: center;
+      margin-top: 20px;
+      user-select: none;
+    }
+
+    .song-title {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .song-artist {
+      font-size: 1rem;
+      color: #b3b3b3;
+    }
+
+    .controls {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-size: 20px;
+      transition: transform 0.2s, color 0.2s;
+      user-select: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.15);
+    }
+
+    .btn.active {
+      color: #1db954;
+    }
+
+    .play-pause-btn {
+      width: 50px;
+      height: 50px;
+      background-color: #1db954;
+      color: black;
+      font-size: 26px;
+      font-weight: bold;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: background-color 0.3s;
+      user-select: none;
+    }
+
+    .play-pause-btn:hover {
+      background-color: #1ed760;
+    }
+
+    .progress-container {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 280px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .progress {
+      flex: 1;
+      height: 5px;
+      background: #535353;
+      border-radius: 2px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .progress-filled {
+      height: 100%;
+      background: #1db954;
+      width: 0%;
+      border-radius: 2px;
+      transition: width 0.1s linear;
+    }
+
+    .time {
+      font-size: 0.75rem;
+      color: #b3b3b3;
+      min-width: 35px;
+      text-align: center;
+      user-select: none;
+    }
+
+    .volume {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    input[type="range"] {
+      width: 100px;
+      cursor: pointer;
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>EchoPlay</header>
+
+  <div class="player-container">
+    <div class="cover-art" style="background-image: url('rick-cover.jpg');"></div>
+
+    <div class="song-info">
+      <div class="song-title">Never Gonna Give You Up</div>
+      <div class="song-artist">Rick Astley</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="repeatBtn" title="Wiederholen">⟳</button>
+      <button class="play-pause-btn" id="playPauseBtn" title="Abspielen">▶</button>
+    </div>
+
+    <div class="progress-container">
+      <div class="time" id="currentTime">0:00</div>
+      <div class="progress" onclick="seek(event)" title="Zum Zeitpunkt springen">
+        <div class="progress-filled" id="progressBar"></div>
+      </div>
+      <div class="time" id="duration">0:00</div>
+    </div>
+
+    <div class="volume" title="Lautstärke">
+      <span style="font-size: 16px;">🔊</span>
+      <input type="range" min="0" max="1" step="0.01" id="volumeControl" />
+    </div>
+
+    <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
+  </div>
+
+  <footer>© 2025 EchoPlay – Hör dein eigenes Ding.</footer>
+
+  <script>
+    const audio = document.getElementById("audio");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const progressBar = document.getElementById("progressBar");
+    const currentTimeDisplay = document.getElementById("currentTime");
+    const durationDisplay = document.getElementById("duration");
+    const volumeControl = document.getElementById("volumeControl");
+    const repeatBtn = document.getElementById("repeatBtn");
+
+    let isPlaying = false;
+    let isRepeating = false;
+
+    playPauseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        audio.pause();
+        playPauseBtn.textContent = "▶";
+        playPauseBtn.title = "Abspielen";
+      } else {
+        audio.play();
+        playPauseBtn.textContent = "⏸";
+        playPauseBtn.title = "Pause";
+      }
+      isPlaying = !isPlaying;
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (!isNaN(audio.duration)) {
+        const current = audio.currentTime;
+        const duration = audio.duration;
+        const percent = (current / duration) * 100;
+        progressBar.style.width = percent + "%";
+
+        currentTimeDisplay.textContent = formatTime(current);
+        durationDisplay.textContent = formatTime(duration);
+      }
+    });
+
+    function formatTime(sec) {
+      const minutes = Math.floor(sec / 60);
+      const seconds = Math.floor(sec % 60);
+      return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    }
+
+    function seek(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const offsetX = e.clientX - rect.left;
+      const width = rect.width;
+      const duration = audio.duration;
+      if (!isNaN(duration)) {
+        const newTime = (offsetX / width) * duration;
+        audio.currentTime = newTime;
+      }
+    }
+
+    volumeControl.addEventListener("input", () => {
+      audio.volume = volumeControl.value;
+    });
+
+    // Initial Lautstärke
+    audio.volume = 0.5;
+    volumeControl.value = 0.5;
+
+    repeatBtn.addEventListener("click", () => {
+      isRepeating = !isRepeating;
+      audio.loop = isRepeating;
+      repeatBtn.classList.toggle("active", isRepeating);
+      repeatBtn.title = isRepeating ? "Wiederholen aktiviert" : "Wiederholen deaktiviert";
+    });
+
+    audio.addEventListener("ended", () => {
+      if (!isRepeating) {
+        audio.currentTime = 0;
+        isPlaying = false;
+        playPauseBtn.textContent = "▶";
+        playPauseBtn.title = "Abspielen";
+        progressBar.style.width = "0%";
+        currentTimeDisplay.textContent = "0:00";
+      }
+    });
+  </script>
+
+</body>
+</html>
