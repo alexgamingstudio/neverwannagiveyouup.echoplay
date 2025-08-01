@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://i.postimg.cc/vTTc3f7m/1000072572-3643adb7b6957288cd73d569e60f8263-18-11-2023-12-35-17-20240415-181847-0000-Original.png" alt="EchoPlay Logo" width="200"/>
+</p>
 # 🎧 EchoPlay – Dein kostenloser Web-Musikplayer
 
 Willkommen auf **EchoPlay**, deinem Musikplayer im Browser.  
