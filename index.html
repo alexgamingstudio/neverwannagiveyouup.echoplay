@@ -2,232 +2,137 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>EchoPlay – Musikplayer</title>
+  <title>EchoPlay Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #121212;
+      background: #121212;
       color: #fff;
     }
-
-    /* Login-Style */
-    .login-screen {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .login-screen, #player-section {
+      display: none;
       justify-content: center;
+      align-items: center;
       height: 100vh;
+      flex-direction: column;
     }
-
     .login-box {
-      background-color: #1e1e1e;
-      padding: 40px;
+      background: #1e1e1e;
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
-      max-width: 400px;
-      width: 90%;
+      box-shadow: 0 0 10px black;
     }
-
-    .login-box h2 {
-      text-align: center;
-      color: #1db954;
-    }
-
-    .login-box input {
+    .login-box input, .login-box button {
       width: 100%;
-      padding: 12px;
+      padding: 10px;
       margin: 10px 0;
       border: none;
       border-radius: 5px;
+    }
+    .login-box input {
       background: #2a2a2a;
       color: white;
     }
-
     .login-box button {
-      width: 100%;
-      padding: 12px;
-      background-color: #1db954;
+      background: #1db954;
       color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
       cursor: pointer;
     }
-
-    .login-box button:hover {
-      background-color: #17a74a;
-    }
-
     .error {
-      color: #ff5c5c;
+      color: red;
       text-align: center;
-      margin-bottom: 10px;
     }
-
-    #player-section {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    /* Player Style */
-    .player {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .player img {
-      width: 250px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    audio {
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 20px;
-    }
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
     .controls button {
-      background-color: #1db954;
+      background: #1db954;
       border: none;
       border-radius: 50%;
       width: 50px;
       height: 50px;
-      color: white;
       font-size: 20px;
       cursor: pointer;
-    }
-
-    .controls button:hover {
-      background-color: #17a74a;
-    }
-
-    .repeat-button.active {
-      background-color: #1db954;
       color: white;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      color: #aaa;
-      font-size: 0.9rem;
-    }
-
-    footer a {
-      color: #1db954;
-      text-decoration: none;
-      margin: 0 8px;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <!-- LOGIN -->
-  <div id="login-section" class="login-screen">
-    <div class="login-box">
-      <h2>EchoPlay Login</h2>
-      <div class="error" id="error-msg"></div>
-      <input type="text" id="username" placeholder="Benutzername" />
-      <input type="password" id="password" placeholder="Passwort" />
-      <button onclick="checkLogin()">Anmelden</button>
-    </div>
+<!-- LOGIN -->
+<div class="login-screen" id="login-section" style="display: flex;">
+  <div class="login-box">
+    <h2>EchoPlay Login</h2>
+    <div class="error" id="error-msg"></div>
+    <input type="text" id="username" placeholder="Benutzername">
+    <input type="password" id="password" placeholder="Passwort">
+    <button onclick="checkLogin()">Anmelden</button>
   </div>
+</div>
 
-  <!-- PLAYER -->
-  <div id="player-section">
-    <div class="player">
-      <img src="rick-cover.jpg" alt="Cover">
-      <h2>Never Gonna Give You Up</h2>
-      <p><a href="https://rickastley.co.uk" target="_blank" style="color:#1db954;">Rick Astley</a></p>
-
-      <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
-
-      <div class="controls">
-        <button id="playPauseBtn">▶</button>
-        <button id="repeatBtn" class="repeat-button">🔁</button>
-      </div>
-    </div>
-
-    <footer>
-      <p>© 2025 EchoPlay – Ein Projekt von Alex Hürtgen</p>
-      <p>
-        <a href="impressum.html">Impressum</a> • 
-        <a href="datenschutz.html">Datenschutz</a> • 
-        <a href="info.html">Über EchoPlay</a>
-      </p>
-    </footer>
+<!-- PLAYER -->
+<div id="player-section">
+  <h1>🎵 EchoPlay</h1>
+  <img src="rick-cover.jpg" alt="Cover" style="width:200px; border-radius:10px;">
+  <h2>Never Gonna Give You Up</h2>
+  <p><a href="https://rickastley.co.uk" target="_blank" style="color:#1db954;">Rick Astley</a></p>
+  <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
+  <div class="controls">
+    <button id="playPauseBtn">▶</button>
+    <button id="repeatBtn">🔁</button>
   </div>
+</div>
 
-  <script>
-    const validUsers = {
-      "alexgaming": "AAaa2211",
-      "gast": "musik"
-      "whatsapp link": "wa2025"
-    };
+<script>
+  const validUsers = {
+    "alex": "1234",
+    "gast": "musik"
+  };
 
-    function checkLogin() {
-      const user = document.getElementById("username").value.trim().toLowerCase();
-      const pass = document.getElementById("password").value.trim();
-      const errorMsg = document.getElementById("error-msg");
+  function checkLogin() {
+    const user = document.getElementById("username").value.trim().toLowerCase();
+    const pass = document.getElementById("password").value.trim();
+    const errorMsg = document.getElementById("error-msg");
 
-      if (validUsers[user] && validUsers[user] === pass) {
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("player-section").style.display = "block";
-      } else {
-        errorMsg.textContent = "Falscher Benutzername oder Passwort!";
-      }
+    if (validUsers[user] && validUsers[user] === pass) {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("player-section").style.display = "flex";
+    } else {
+      errorMsg.textContent = "Benutzername oder Passwort falsch!";
     }
+  }
 
-    // Player-Funktionen
-    const audio = document.getElementById("audio");
-    const playPauseBtn = document.getElementById("playPauseBtn");
-    const repeatBtn = document.getElementById("repeatBtn");
+  // Musikplayer-Logik
+  const audio = document.getElementById("audio");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const repeatBtn = document.getElementById("repeatBtn");
 
-    let isPlaying = false;
-    let repeat = false;
+  let isPlaying = false;
+  let repeat = false;
 
-    playPauseBtn.onclick = () => {
-      if (audio.paused) {
-        audio.play();
-        playPauseBtn.textContent = "⏸";
-        isPlaying = true;
-      } else {
-        audio.pause();
-        playPauseBtn.textContent = "▶";
-        isPlaying = false;
-      }
-    };
+  playPauseBtn.onclick = () => {
+    if (audio.paused) {
+      audio.play();
+      playPauseBtn.textContent = "⏸";
+    } else {
+      audio.pause();
+      playPauseBtn.textContent = "▶";
+    }
+  };
 
-    repeatBtn.onclick = () => {
-      repeat = !repeat;
-      repeatBtn.classList.toggle("active");
-    };
+  repeatBtn.onclick = () => {
+    repeat = !repeat;
+    repeatBtn.style.background = repeat ? "#1db954" : "#444";
+  };
 
-    audio.addEventListener("ended", () => {
-      if (repeat) {
-        audio.currentTime = 0;
-        audio.play();
-      } else {
-        audio.currentTime = 0;
-        playPauseBtn.textContent = "▶";
-        isPlaying = false;
-      }
-    });
-  </script>
+  audio.addEventListener("ended", () => {
+    if (repeat) {
+      audio.currentTime = 0;
+      audio.play();
+    } else {
+      playPauseBtn.textContent = "▶";
+    }
+  });
+</script>
+
 </body>
 </html>
