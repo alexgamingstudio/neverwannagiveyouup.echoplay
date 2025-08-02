@@ -43,9 +43,9 @@ Alle Inhalte werden mit größter Sorgfalt ausgewählt. Wenn du der Meinung bist
 ## 💌 Kontakt
 
 Fragen oder Hinweise?  
-Schreib uns gerne an: [kontakt@echoplay.de](mailto:kontakt@echoplay.de)
+Schreib uns gerne an: [kontakt@echoplay.de](mailto:team.alexgaming@icloud.com)
 
 ---
 
 **Viel Spaß beim Hören!**  
-_Dein EchoPlay-Team_
+_Dein EchoPlay-Entwickler_
