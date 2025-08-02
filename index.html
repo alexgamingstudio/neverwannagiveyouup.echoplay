@@ -2,64 +2,148 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
-  <title>EchoPlay Login</title>
+  <title>EchoPlay – Musikplayer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #121212;
+      background-color: #121212;
       color: #fff;
     }
-    .login-screen, #player-section {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+
+    /* LOGIN */
+    .login-screen {
+      display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
     }
+
     .login-box {
-      background: #1e1e1e;
-      padding: 30px;
+      background-color: #1e1e1e;
+      padding: 40px;
       border-radius: 10px;
-      box-shadow: 0 0 10px black;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      max-width: 400px;
+      width: 90%;
     }
-    .login-box input, .login-box button {
+
+    .login-box h2 {
+      text-align: center;
+      color: #1db954;
+    }
+
+    .login-box input {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin: 10px 0;
       border: none;
       border-radius: 5px;
-    }
-    .login-box input {
       background: #2a2a2a;
       color: white;
     }
+
     .login-box button {
-      background: #1db954;
+      width: 100%;
+      padding: 12px;
+      background-color: #1db954;
       color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
       cursor: pointer;
     }
+
+    .login-box button:hover {
+      background-color: #17a74a;
+    }
+
     .error {
-      color: red;
+      color: #ff5c5c;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    /* PLAYER */
+    #player-section {
+      display: none;
+      padding: 40px 20px;
       text-align: center;
     }
+
+    .logo {
+      width: 160px;
+      margin-bottom: 20px;
+    }
+
+    .cover {
+      width: 260px;
+      border-radius: 12px;
+      margin: 20px auto;
+    }
+
+    .controls {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
     .controls button {
-      background: #1db954;
-      border: none;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 20px;
-      cursor: pointer;
+      border: none;
+      background-color: #1db954;
       color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background-color: #17a74a;
+    }
+
+    .repeat-button {
+      background-color: #2a2a2a;
+      font-size: 20px;
+    }
+
+    .repeat-button.active {
+      background-color: #1db954;
+      color: white;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 15px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #1db954;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="login-screen" id="login-section" style="display: flex;">
+<div id="login-section" class="login-screen">
   <div class="login-box">
     <h2>EchoPlay Login</h2>
     <div class="error" id="error-msg"></div>
@@ -71,18 +155,31 @@
 
 <!-- PLAYER -->
 <div id="player-section">
-  <h1>🎵 EchoPlay</h1>
-  <img src="rick-cover.jpg" alt="Cover" style="width:200px; border-radius:10px;">
+  <img src="https://i.postimg.cc/vTTc3f7m/1000072572-3643adb7b6957288cd73d569e60f8263-18-11-2023-12-35-17-20240415-181847-0000-Original.png" alt="EchoPlay Logo" class="logo">
+
+  <img src="rick-cover.jpg" alt="Cover" class="cover">
   <h2>Never Gonna Give You Up</h2>
-  <p><a href="https://rickastley.co.uk" target="_blank" style="color:#1db954;">Rick Astley</a></p>
+  <p><a href="https://rickastley.co.uk" target="_blank">Rick Astley</a></p>
+
   <audio id="audio" src="never-gonna-give-you-up.mp3"></audio>
+
   <div class="controls">
     <button id="playPauseBtn">▶</button>
-    <button id="repeatBtn">🔁</button>
+    <button id="repeatBtn" class="repeat-button">🔁</button>
   </div>
+
+  <footer>
+    <p>© 2025 EchoPlay – Ein Projekt von Alex Hürtgen</p>
+    <p>
+      <a href="impressum.html">Impressum</a> • 
+      <a href="datenschutz.html">Datenschutz</a> • 
+      <a href="info.html">Über EchoPlay</a>
+    </p>
+  </footer>
 </div>
 
 <script>
+  // Benutzer-Zugänge
   const validUsers = {
     "alex": "1234",
     "gast": "musik"
@@ -95,18 +192,17 @@
 
     if (validUsers[user] && validUsers[user] === pass) {
       document.getElementById("login-section").style.display = "none";
-      document.getElementById("player-section").style.display = "flex";
+      document.getElementById("player-section").style.display = "block";
     } else {
       errorMsg.textContent = "Benutzername oder Passwort falsch!";
     }
   }
 
-  // Musikplayer-Logik
+  // Player-Funktionalität
   const audio = document.getElementById("audio");
   const playPauseBtn = document.getElementById("playPauseBtn");
   const repeatBtn = document.getElementById("repeatBtn");
 
-  let isPlaying = false;
   let repeat = false;
 
   playPauseBtn.onclick = () => {
@@ -121,7 +217,7 @@
 
   repeatBtn.onclick = () => {
     repeat = !repeat;
-    repeatBtn.style.background = repeat ? "#1db954" : "#444";
+    repeatBtn.classList.toggle("active");
   };
 
   audio.addEventListener("ended", () => {
@@ -129,6 +225,7 @@
       audio.currentTime = 0;
       audio.play();
     } else {
+      audio.currentTime = 0;
       playPauseBtn.textContent = "▶";
     }
   });
