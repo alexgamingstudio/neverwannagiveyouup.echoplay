@@ -32,74 +32,68 @@
       border-radius: 6px;
       text-align: center;
       margin-bottom: 20px;
-      header {
-  display: none; /* initial verstecken */
-}
-
-.player-container {
-  display: none; /* initial verstecken */
-}
+      display: none; /* Initial verstecken */
     }
     /* LOGIN */
-#login-section {
-  width: 100%;
-  max-width: 400px;
-  background-color: #181818;
-  padding: 30px 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  user-select: none;
-}
-#login-section h2 {
-  color: #1db954;
-  margin-bottom: 15px;
-  user-select: none;
-}
-#login-section input {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: none;
-  background: #2a2a2a;
-  color: white;
-  font-size: 1rem;
-}
-#login-section button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  background-color: #1db954;
-  border: none;
-  color: black;
-  font-weight: bold;
-  font-size: 1.1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
-  transition: background-color 0.3s;
-}
-#login-section button:hover {
-  background-color: #1ed760;
-}
-#error-msg {
-  color: #ff5c5c;
-  margin-bottom: 10px;
-  min-height: 1.2em;
-  user-select: none;
-  text-align: center;
-}
-   .player-container {
+    #login-section {
+      width: 100%;
+      max-width: 400px;
+      background-color: #181818;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+    }
+    #login-section h2 {
+      color: #1db954;
+      margin-bottom: 15px;
+      user-select: none;
+    }
+    #login-section input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      background: #2a2a2a;
+      color: white;
+      font-size: 1rem;
+    }
+    #login-section button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #1db954;
+      border: none;
+      color: black;
+      font-weight: bold;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    #login-section button:hover {
+      background-color: #1ed760;
+    }
+    #error-msg {
+      color: #ff5c5c;
+      margin-bottom: 10px;
+      min-height: 1.2em;
+      user-select: none;
+      text-align: center;
+    }
+    .player-container {
       background-color: #181818;
       padding: 20px;
       border-radius: 10px;
       width: 100%;
       max-width: 400px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-      display: flex;
+      display: none; /* Initial verstecken */
       flex-direction: column;
       align-items: center;
       user-select: none;
@@ -294,29 +288,30 @@
 
   <script>
     const validUsers = {
-  "alex": "1234",
-  "gast": "musik"
-};
+      "alex": "1234",
+      "gast": "musik"
+    };
 
-const loginSection = document.getElementById('login-section');
-const playerContainer = document.querySelector('.player-container');
-const header = document.querySelector('header');
-const errorMsg = document.getElementById('error-msg');
+    const loginSection = document.getElementById('login-section');
+    const playerContainer = document.querySelector('.player-container');
+    const header = document.querySelector('header');
+    const errorMsg = document.getElementById('error-msg');
 
-function checkLogin() {
-  const user = document.getElementById("username").value.trim().toLowerCase();
-  const pass = document.getElementById("password").value.trim();
+    function checkLogin() {
+      const user = document.getElementById("username").value.trim().toLowerCase();
+      const pass = document.getElementById("password").value.trim();
 
-  if (validUsers[user] && validUsers[user] === pass) {
-    // Login erfolgreich: Login ausblenden, Player + Header anzeigen
-    loginSection.style.display = 'none';
-    playerContainer.style.display = 'flex';
-    header.style.display = 'block';
-    errorMsg.textContent = '';
-  } else {
-    errorMsg.textContent = 'Benutzername oder Passwort falsch!';
-  }
-}
+      if (validUsers[user] && validUsers[user] === pass) {
+        // Login erfolgreich: Login ausblenden, Player + Header anzeigen
+        loginSection.style.display = 'none';
+        playerContainer.style.display = 'flex';
+        header.style.display = 'block';
+        errorMsg.textContent = '';
+      } else {
+        errorMsg.textContent = 'Benutzername oder Passwort falsch!';
+      }
+    }
+
     const audio = document.getElementById("audio");
     const playPauseBtn = document.getElementById("playPauseBtn");
     const progressBar = document.getElementById("progressBar");
@@ -404,4 +399,3 @@ function checkLogin() {
   </script>
 </body>
 </html>
-
