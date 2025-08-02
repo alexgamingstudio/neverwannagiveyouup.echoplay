@@ -7,8 +7,8 @@
 
 <p align="center">
   <a href="https://alexgamingstudio.github.io/neverwannagiveyouup.echoplay">🔗 Webseite öffnen</a> •
-  <a href="impressum.html">📘 Impressum</a> •
-  <a href="datenschutz.html">📒 Datenschutz</a>
+  <a href="https://alexgamingstudio.github.io/neverwannagiveyouup.echoplay/impressum.html">📘 Impressum</a> •
+  <a href="https://alexgamingstudio.github.io/neverwannagiveyouup.echoplay/datenschutz.html">📒 Datenschutz</a>
 </p>
 
 ---
