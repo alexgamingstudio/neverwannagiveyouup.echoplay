@@ -27,7 +27,9 @@ Es ist komplett kostenlos, funktioniert ohne Anmeldung und verzichtet bewusst au
 - Modernes, responsives Design
 - Unterstützt Lautstärkeregelung, Wiederholen & Fortschrittsanzeige
 - DSGVO-konform und rechtlich sicher
-  ---
+
+- ---
+
 - Achtung: Diese Plattform ist aktuell in der Beta. Bitte erwarten sie nicht zu viel
 
 ---
